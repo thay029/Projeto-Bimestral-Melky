@@ -1,22 +1,26 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { colors, spacing } from '../theme';
+import { spacing } from '../theme';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Footer() {
+  const { colors } = useTheme();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Desenvolvido por Alura.</Text>
-      <Text style={styles.text}>Projeto fictício sem fins comerciais.</Text>
+    <View style={[styles.container, { backgroundColor: colors.primary }]}>
+      <Text style={[styles.text, { color: colors.onPrimary }]}>Desenvolvido por Giovanna, Giuliana e Thayssa.</Text>
+      <Text style={[styles.text, { color: colors.onPrimary }]}>
+        Projeto fictício sem fins comerciais.
+      </Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.primary,
     paddingVertical: spacing.md,
     alignItems: 'center',
     width: '100%',
   },
-  text: { color: colors.onPrimary, fontSize: 12, textAlign: 'center' },
+  text: { fontSize: 12, textAlign: 'center' },
 });

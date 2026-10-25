@@ -4,7 +4,7 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen';
 import AboutScreen from './src/screens/AboutScreen';
-import { colors } from './src/theme';
+import { ThemeProvider, useTheme } from './src/context/ThemeContext';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -13,15 +13,17 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const navTheme = {
-  ...DefaultTheme,
-  colors: { ...DefaultTheme.colors, background: colors.background },
-};
+function AppContent() {
+  const { colors, isDark } = useTheme();
 
-export default function App() {
+  const navTheme = {
+    ...DefaultTheme,
+    colors: { ...DefaultTheme.colors, background: colors.background },
+  };
+
   return (
     <NavigationContainer theme={navTheme}>
-      <StatusBar style="light" />
+      <StatusBar style={isDark ? 'light' : 'dark'} />
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{
@@ -34,5 +36,13 @@ export default function App() {
         <Stack.Screen name="Sobre" component={AboutScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, Text, StyleSheet, Linking, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../theme';
+import { useTheme } from '../context/ThemeContext';
 
 type Props = {
   title: string;
@@ -10,6 +10,8 @@ type Props = {
 };
 
 export default function SocialButton({ title, icon, url }: Props) {
+  const { colors } = useTheme();
+
   const handlePress = async () => {
     try {
       await Linking.openURL(url);
@@ -22,10 +24,14 @@ export default function SocialButton({ title, icon, url }: Props) {
     <Pressable
       onPress={handlePress}
       accessibilityRole="link"
-      style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+      style={({ pressed }) => [
+        styles.button,
+        { borderColor: colors.primary },
+        pressed && { opacity: 0.7 },
+      ]}
     >
       <Ionicons name={icon} size={22} color={colors.primary} />
-      <Text style={styles.text}>{title}</Text>
+      <Text style={[styles.text, { color: colors.text }]}>{title}</Text>
     </Pressable>
   );
 }
@@ -37,11 +43,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 10,
     borderWidth: 1.5,
-    borderColor: colors.primary,
     borderRadius: 10,
     paddingVertical: 14,
     width: '100%',
   },
-  pressed: { backgroundColor: 'rgba(34, 211, 255, 0.15)' },
-  text: { color: colors.text, fontSize: 16, fontWeight: '600' },
+  text: { fontSize: 16, fontWeight: '600' },
 });

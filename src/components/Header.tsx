@@ -1,12 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { colors, spacing } from '../theme';
+import { spacing } from '../theme';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Header() {
+  const { colors } = useTheme();
+
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>DEV.SPOT</Text>
+      <Text style={[styles.logo, { color: colors.text }]}>DEV.SPOT</Text>
       <MaterialCommunityIcons
         name="star-four-points-outline"
         size={36}
@@ -24,11 +27,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: spacing.lg,
   },
-  logo: {
-    color: colors.text,
-    fontSize: 22,
-    fontWeight: '700',
-    letterSpacing: 0.5,
-  },
+  logo: { fontSize: 22, fontWeight: '700', letterSpacing: 0.5 },
   icon: { marginLeft: 4, marginTop: 6 },
 });

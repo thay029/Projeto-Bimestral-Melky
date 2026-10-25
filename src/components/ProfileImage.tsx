@@ -1,14 +1,15 @@
 import React from 'react';
 import { View, Image, StyleSheet, ImageSourcePropType } from 'react-native';
-import { colors } from '../theme';
+import { useTheme } from '../context/ThemeContext';
 
 type Props = { source: ImageSourcePropType };
 
 export default function ProfileImage({ source }: Props) {
+  const { colors } = useTheme();
+
   return (
     <View style={styles.wrapper}>
-      {/* moldura azul deslocada atrás da foto */}
-      <View style={styles.frame} />
+      <View style={[styles.frame, { borderColor: colors.primary }]} />
       <Image source={source} style={styles.image} resizeMode="cover" />
     </View>
   );
@@ -17,13 +18,12 @@ export default function ProfileImage({ source }: Props) {
 const styles = StyleSheet.create({
   wrapper: { width: '100%', aspectRatio: 1, marginVertical: 8 },
   frame: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     top: -6,
     left: 6,
     right: -6,
     bottom: 6,
     borderWidth: 2,
-    borderColor: colors.primary,
     borderRadius: 20,
   },
   image: { width: '100%', height: '100%', borderRadius: 20 },

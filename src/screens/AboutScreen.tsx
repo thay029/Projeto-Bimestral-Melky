@@ -7,28 +7,31 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ProfileImage from '../components/ProfileImage';
 import PrimaryButton from '../components/PrimaryButton';
-import { colors, spacing } from '../theme';
+import { spacing } from '../theme';
+import { useTheme } from '../context/ThemeContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Sobre'>;
 
 const paragraphs = [
-  'Sou a Joana Santos, desenvolvedora Front-end apaixonada por transformar ideias em interfaces funcionais, acessíveis e bem pensadas. Trabalho principalmente com React, HTML e CSS, criando experiências digitais que não só funcionam bem, mas também fazem sentido para quem usa.',
-  'Gosto de colaborar de perto com pequenos negócios, designers e times criativos, ajudando a tirar projetos do papel e levá-los para a web de forma prática e eficiente. Acredito que um bom produto nasce do equilíbrio entre código bem escrito, atenção aos detalhes e uma comunicação clara ao longo de todo o processo.',
-  'Estou sempre buscando evoluir, aprender novas tecnologias e aprimorar minhas soluções, seja otimizando performance, melhorando a usabilidade ou explorando novas formas de construir interfaces mais escaláveis. Se você tem uma ideia e quer transformá-la em algo real, vamos conversar.',
+  'Somos Giovanna, Giuliana Sbrissa e Thayssa Fernanda, três amigas de 21 anos e estudantes de Análise e Desenvolvimento de Sistemas na FATEC Itu. Compartilhamos o interesse por tecnologia e estamos construindo nossos caminhos profissionais, cada uma com suas próprias experiências e descobertas.',
+  'Atualmente, trabalhamos em empresas diferentes: a Giu na SAP, a Thay na Círculo e a Gi na RenaSoft. Mesmo atuando em áreas distintas, temos em comum a vontade de aprender, desenvolver novas habilidades e explorar as possibilidades da tecnologia. Entre trabalho, faculdade e vida pessoal, seguimos compartilhando experiências e ajudando umas às outras nessa jornada.',
+  'Atualmente, também estamos desenvolvendo nosso Trabalho de Graduação (TG), um site de adoção de animais que busca aproximar ONGs e pessoas interessadas em adotar. Queremos tornar esse processo mais fácil e ajudar mais animais a encontrarem um lar. É uma oportunidade de colocar em prática o que aprendemos na faculdade e transformar nossas ideias em algo útil, enquanto seguimos aprendendo e crescendo na área.',
 ];
 
 export default function AboutScreen({ navigation }: Props) {
+  const { colors } = useTheme();
+
   return (
-    <SafeAreaView style={styles.safe} edges={['top']}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]} edges={['top']}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.content}>
           <Header />
           <ProfileImage source={require('../assets/perfil.png')} />
 
-          <Text style={styles.title}>Sobre mim</Text>
+          <Text style={[styles.title, { color: colors.text }]}>Sobre nós</Text>
 
           {paragraphs.map((text, index) => (
-            <Text key={index} style={styles.paragraph}>
+            <Text key={index} style={[styles.paragraph, { color: colors.textMuted }]}>
               {text}
             </Text>
           ))}
@@ -45,21 +48,10 @@ export default function AboutScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: colors.background },
+  safe: { flex: 1 },
   scroll: { flexGrow: 1, justifyContent: 'space-between' },
   content: { paddingHorizontal: spacing.lg, paddingBottom: spacing.xl },
-  title: {
-    color: colors.text,
-    fontSize: 24,
-    fontWeight: '700',
-    marginTop: spacing.lg,
-    marginBottom: spacing.xs,
-  },
-  paragraph: {
-    color: colors.textMuted,
-    fontSize: 14,
-    lineHeight: 24,
-    marginTop: spacing.md,
-  },
+  title: { fontSize: 24, fontWeight: '700', marginTop: spacing.lg, marginBottom: spacing.xs },
+  paragraph: { fontSize: 14, lineHeight: 24, marginTop: spacing.md },
   back: { marginTop: spacing.xl },
 });
